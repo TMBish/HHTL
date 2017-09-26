@@ -21,7 +21,7 @@ shinyUI(
     
     h1(class = "ui header", "Hannah's History Timeline"),
     
-    div(class = "ui horizontal divider", uiicon("tag"), "Timeline"),
+    div(class = "ui horizontal divider", uiicon("world"), "The History Of Everything"),
     
     br(),
     
@@ -29,7 +29,7 @@ shinyUI(
     
     br(),
     
-    div(class = "ui horizontal divider", uiicon("tag"), "Details")
+    div(class = "ui horizontal divider", uiicon("options"), "Details")
     
   
 

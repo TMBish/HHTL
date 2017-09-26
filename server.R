@@ -8,22 +8,23 @@
 #
 
 library(shiny)
+library(googlesheets)
+library(dplyr)
+
+hhtl_link <- "https://docs.google.com/spreadsheets/d/1ixqO2ZubVrb2-zV1gUSDWA0SmajvhZUitfv9LBPD4jc/edit?usp=sharing"
+
+hhtl_obj <- hhtl_link %>%
+  gs_url() 
+
+hhtl_data <- hhtl_obj %>%
+  gs_read("Sheet1")
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
   
   output$timeline <- renderTimevis({
     
-    data <- data.frame(
-      id      = 1:4,
-      content = c("Item one", "Item two",
-                  "Ranged item", "Item four"),
-      start   = c("2016-01-10", "2016-01-11",
-                  "2016-01-20", "2016-02-14 15:00:00"),
-      end     = c(NA, NA, "2016-02-04", NA)
-    )
-    
-    return(timevis(data))
+      hhtl_data %>% timevis() %>% return()
   })
   
 
