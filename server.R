@@ -24,8 +24,10 @@ shinyServer(function(input, output) {
   
   output$timeline <- renderTimevis({
     
-      hhtl_data %>% timevis() %>% return()
+      hhtl_data %>% timevis(height = 600) %>% return()
   })
+
+  
   
 
   
