@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Patrick+Hand+SC');
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans');
+@import url('https://fonts.googleapis.com/css?family=Muli');
+
 
 /* App header */
 
@@ -18,8 +21,14 @@
 
 .btn {
     color: #fff;
-    background-color: #FF5252;
-    border-color: #FF5252;
+    background-color: #ffc107;
+    border-color: #ffa000;
+}
+
+#upload_event {
+    background-color: #ffc107;
+    border-color: #ffa000;
+    color: #FFF;
 }
 
 /* Drop Down */
@@ -30,17 +39,33 @@
 body {
 	padding: 100px;
 	padding-top: 0px;
+	font-family: 'Muli', cursive;
 }
 
 h1.ui.header {
+  font-family: 'Josefin Sans', sans-serif;
 	font-size: 42px;
 	color: #FFF;
 	font-weight: bold;
 	margin-left: auto;
 }
 
-#timeline {
-font-family: 'Patrick Hand SC', cursive;
+/* ------------------------- */
+/*        The Timeline       */
+/* ------------------------- */
+
+/* Timeline button */
+#timeline button {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    padding: 5px 0;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 20px;
+    background-color: #ffc107;
+    border-color: #ffa000;
+    color: #FFF;
 }
 
 #timeline .vis-panel.vis-bottom {
@@ -82,10 +107,11 @@ div.vis-timeline.vis-bottom {
 }
 
 div.vis-item {
+    text-align: center;
     color: #FFF;
     border-color: #FF5252;
     border-width: 1px;
-    background-color: #FF5252;
+    background-color: #FF8A80;
     font-weight: bold;
 }
 
@@ -93,10 +119,3 @@ div.vis-item {
 	width:100%;
 }
 
-/* Details */
-
-/*#details {
-	display:flex;
-	justify-content:center;
-	align-items:center;
-}*/
