@@ -1,5 +1,19 @@
 @import url('https://fonts.googleapis.com/css?family=Patrick+Hand+SC');
 
+/* App header */
+
+.app-header {
+	height: 150px;
+	display:flex;
+	justify-content: right;
+	align-items: center;
+	margin-bottom: 15px;
+	background-color: #FF8A80;
+	width: 100vw;
+	margin-left: calc(-1 * ((100vw - 100%) / 2));
+	padding-right: 100px;
+}
+
 /* Misc Elements*/
 
 .btn {
@@ -8,15 +22,21 @@
     border-color: #FF5252;
 }
 
+/* Drop Down */
+.dropdown-menu {
+	padding:10px;
+}
+
 body {
 	padding: 100px;
-	padding-top: 50px;
+	padding-top: 0px;
 }
 
 h1.ui.header {
 	font-size: 42px;
-	color: #FF5252;
+	color: #FFF;
 	font-weight: bold;
+	margin-left: auto;
 }
 
 #timeline {

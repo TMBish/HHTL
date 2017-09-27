@@ -1,12 +1,3 @@
-#
-# This is the server logic of a Shiny web application. You can run the 
-# application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-# 
-#    http://shiny.rstudio.com/
-#
-
 library(shiny)
 library(googlesheets)
 library(dplyr)
@@ -25,6 +16,32 @@ shinyServer(function(input, output) {
   output$timeline <- renderTimevis({
     
       hhtl_data %>% timevis(height = 600) %>% return()
+  })
+  
+  observeEvent(input$upload_event, {
+    
+    title <- input$title
+    
+    img_link <- input$image_link
+    
+    ev_dates <- input$event_dates
+    start_date <- ev_dates[1]
+    end_date <- ifelse(ev_dates[1]==ev_dates[2], NA, ev_dates[2])
+    
+    desc <- input$description
+    
+    
+    new_row <- data.frame(
+      id = 1,
+      content = title,
+      start = start_date,
+      end = end_date,
+      img = img_link,
+      description = desc
+    )
+    
+    new_row %>% head()
+    
   })
 
   
