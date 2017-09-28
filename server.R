@@ -6,7 +6,7 @@ library(glue)
 hhtl_link <- "https://docs.google.com/spreadsheets/d/1ixqO2ZubVrb2-zV1gUSDWA0SmajvhZUitfv9LBPD4jc/edit?usp=sharing"
 
 hhtl_obj <- hhtl_link %>%
-  gs_url() 
+  gs_url()
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
@@ -63,53 +63,54 @@ shinyServer(function(input, output) {
   
   # On click show modal
   shinyjs::onclick("timeline", {
-                   
-                   shinyjs::alert("hello")
+    
+    test = js$find_ev()
+    
+    shinyjs::alert(test)
+
+    
+    # # Modal
+    # showModal(
+    #   
+    #   modalDialog(
+    #     
+    #     div(class = "ui card",
+    #         
+    #         div(class = "content",
+    #             
+    #             div(class = "right floated meta", "14h"),
+    #             img(class = "ui avatar image", src = "hannah.jpg"),
+    #             "Hannah"
+    #             
+    #         ),
+    #         
+    #         div(class = "image",
+    #             
+    #             img(src = "wedding.jpg")
+    #             
+    #         ),
+    #         
+    #         div(class = "content",
+    #             
+    #             span(class = "right floated", uiicon("calendar"), "201-04-08"),
+    #             uiicon("comment"), "Tom + Hannah Wedding"
+    #             
+    #         ),
+    #         
+    #         div(class = "extra content",
+    #             
+    #             tags$p("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
+    #             
+    #         )
+    #         
+    #         
+    #         
+    #     ),
+    #     title = NULL,
+    #     size ="l",
+    #     easyClose = TRUE,
+    #     fade = TRUE)
+    # )
   })
-                   
-                   # # Modal
-                   # showModal(
-                   #   
-                   #   modalDialog(
-                   #     
-                   #     div(class = "ui card",
-                   #         
-                   #         div(class = "content",
-                   #             
-                   #             div(class = "right floated meta", "14h"),
-                   #             img(class = "ui avatar image", src = "hannah.jpg"),
-                   #             "Hannah"
-                   #             
-                   #         ),
-                   #         
-                   #         div(class = "image",
-                   #             
-                   #             img(src = "wedding.jpg")
-                   #             
-                   #         ),
-                   #         
-                   #         div(class = "content",
-                   #             
-                   #             span(class = "right floated", uiicon("calendar"), "201-04-08"),
-                   #             uiicon("comment"), "Tom + Hannah Wedding"
-                   #             
-                   #         ),
-                   #         
-                   #         div(class = "extra content",
-                   #             
-                   #             tags$p("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
-                   #             
-                   #         )
-                   #         
-                   #         
-                   #         
-                   #     ),
-                   #     title = NULL,
-                   #     footer = modalButton("Dismiss"),
-                   #     size ="l",
-                   #     easyClose = TRUE,
-                   #     fade = TRUE)
-                   # ) 
-  # )
   
 })

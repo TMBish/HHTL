@@ -12,9 +12,21 @@ library(shiny.semantic)
 library(shinyWidgets)
 library(timevis)
 
+find_ev <- "
+shinyjs.find_ev = function(){
+
+var ev = $('#timeline').find('.vis-selected').text();
+
+return(ev)
+}"
+
+
 # Define UI for application that draws a histogram
 shinyUI(
   semanticPage(
+    
+    useShinyjs(),
+    extendShinyjs(text = find_ev),
     
     # Add custom css styles
     includeCSS(file.path('www', 'custom-style.css')),
