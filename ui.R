@@ -1,32 +1,30 @@
-#
-# This is the user-interface definition of a Shiny web application. You can
-# run the application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-# 
-#    http://shiny.rstudio.com/
-#
-
 library(shiny)
+library(shinyjs)
 library(shiny.semantic)
 library(shinyWidgets)
 library(timevis)
+library(V8)
 
-find_ev <- "
+jsCode <- "
+
+shinyjs.init = function() {
+  Shiny.onInputChange('TL_selection', '')
+};
+
 shinyjs.find_ev = function(){
 
-var ev = $('#timeline').find('.vis-selected').text();
+  var sel_title = $('#timeline').find('.vis-selected').text()
 
-return(ev)
+  Shiny.onInputChange('TL_selection', sel_title)
+
 }"
-
 
 # Define UI for application that draws a histogram
 shinyUI(
   semanticPage(
     
     useShinyjs(),
-    extendShinyjs(text = find_ev),
+    extendShinyjs(text = jsCode),
     
     # Add custom css styles
     includeCSS(file.path('www', 'custom-style.css')),
