@@ -1,25 +1,3 @@
-library(shiny)
-library(shinyjs)
-library(shiny.semantic)
-library(shinyWidgets)
-library(timevis)
-library(V8)
-
-jsCode <- "
-
-shinyjs.init = function() {
-  Shiny.onInputChange('TL_selection', '')
-};
-
-shinyjs.find_ev = function(){
-
-  var sel_title = $('#timeline').find('.vis-selected').text()
-
-  Shiny.onInputChange('TL_selection', sel_title)
-
-}"
-
-# Define UI for application that draws a histogram
 shinyUI(
   semanticPage(
     

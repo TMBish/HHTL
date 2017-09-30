@@ -1,21 +1,36 @@
-create_card = function(ind) {
+create_card = function(ind, df) {
 
+  TLinfo <- df %>% filter(id == ind)
+  
+  dates <- ifelse(
+                is.na(TLinfo$end), 
+                TLinfo$start %>% format("%d %b %Y"),
+                TLinfo$start %>% format("%d %b %Y") %>% paste(TLinfo$end %>% format("%d %b %Y"), sep = " - "))
+  
+  img_link <- TLinfo$img
+  
+  time_added <- TLinfo$entry_added %>% ymd_hms()
+  
+  since_now <- format_time_diff(Sys.time() %>% ymd_hms(), time_added)
+  
   div(class = "ui card",
       div(class = "content",
-          div(class = "right floated meta", "14h"),
+          div(class = "right floated meta", since_now),
           img(class = "ui avatar image", src = "hannah.jpg"),
-          #"Hannah"
-          ind
+          "Hannah"
       ),
       div(class = "image",
-          img(src = "wedding.jpg")
+          img(src = img_link)
       ),
       div(class = "content",
-          span(class = "right floated", uiicon("calendar"), "201-04-08"),
-          uiicon("comment"), "Tom + Hannah Wedding"
+          span(class = "right floated", uiicon("calendar"), dates),
+          uiicon("comment"), 
+          TLinfo$content
       ),
       div(class = "extra content",
-          tags$p("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
+          
+          HTML(TLinfo$description %>% markdown::markdownToHTML(text = . , fragment.only = TRUE))
+          
       )
   )
   

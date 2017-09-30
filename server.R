@@ -1,17 +1,4 @@
-library(shiny)
-library(googlesheets)
-library(dplyr)
-library(glue)
 
-hhtl_link <- "https://docs.google.com/spreadsheets/d/1ixqO2ZubVrb2-zV1gUSDWA0SmajvhZUitfv9LBPD4jc/edit?usp=sharing"
-
-hhtl_obj <- hhtl_link %>%
-  gs_url()
-
-# Load create card function
-source("create_card.R")
-
-# Define server logic required to draw a histogram
 shinyServer(function(input, output) {
   
   revals <- reactiveValues(
@@ -37,6 +24,8 @@ shinyServer(function(input, output) {
     end_date <- ev_dates[2]
     desc <- input$description
     
+    time_added <- Sys.time()
+    
     if(end_date==start_date){end_date<-NA}
     
     
@@ -47,7 +36,8 @@ shinyServer(function(input, output) {
       start = start_date,
       end = end_date,
       img = img_link,
-      description = desc
+      description = desc,
+      entry_added = time_added
     )
     
     # Add row to googlesheet object
@@ -64,35 +54,23 @@ shinyServer(function(input, output) {
     
   })
   
+  # Respond to a timeline click event
   observe({
     
     selected_index = input$timeline_selected 
     
+    # Only do something if the event is a new TL index has been clicked on
     if (selected_index %>% length() > 0) {
       
       showModal(
         modalDialog(
-          create_card(selected_index)
-        , title = NULL, size ="l", easyClose = TRUE, fade = TRUE
+          create_card(selected_index, revals$data)
+        , title = NULL, size ="l", footer=NULL, easyClose = TRUE, fade = TRUE
         )
       )
       
     }
   })
-  
-  # On click show modal
-  # shinyjs::onclick("timeline", {
-  #   
-  #   js$find_ev()
-  #   
-  #   isolate({
-  #     printme=input$TL_selection
-  #   })
-  #   
-  #   print(printme)
-  #   
-  # })
-  #shinyjs::alert(js$find_ev())
   
   
 })
