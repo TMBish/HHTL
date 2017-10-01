@@ -1,6 +1,6 @@
 shinyUI(
   semanticPage(
-    
+    title = "My page",
     useShinyjs(),
     extendShinyjs(text = jsCode),
     
@@ -51,7 +51,7 @@ shinyUI(
         
         div(class="fifteen wide column",
             
-            div(class = "ui horizontal divider", uiicon("world"), "The History Of Everything")
+            div(class = "ui horizontal divider", icon("globe"), "The History Of Everything")
             
         )
         
