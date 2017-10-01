@@ -1,24 +1,42 @@
+/* Fonts */
 @import url('https://fonts.googleapis.com/css?family=Patrick+Hand+SC');
 @import url('https://fonts.googleapis.com/css?family=Josefin+Sans');
 @import url('https://fonts.googleapis.com/css?family=Muli');
 
+/* ------------------------- */
+/*        Misc Elements      */
+/* ------------------------- */
 
-/* App header */
-
-.app-header {
-	height: 150px;
-	display:flex;
-	justify-content: right;
-	align-items: center;
-	margin-bottom: 15px;
-	background-color: #ef89ae;
-	width: 100vw;
-	margin-left: calc(-1 * ((100vw - 100%) / 2));
-	padding-right: 100px;
+/* Globals */
+body {
+  padding: 100px;
+  padding-top: 0px;
+  font-family: 'Muli', cursive;
 }
 
-/* Misc Elements*/
+/* Header */
+h1.ui.header {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 42px;
+  color: #FFF;
+  font-weight: bold;
+  margin-left: auto;
+}
 
+.app-header {
+  height: 150px;
+  display:flex;
+  justify-content: right;
+  align-items: center;
+  margin-bottom: 15px;
+  background-color: #ef89ae;
+  width: 100vw;
+  margin-left: calc(-1 * ((100vw - 100%) / 2));
+  padding-right: 100px;
+}
+
+
+/* Loading page */
 #loading_page {
   position:absolute;
   z-index: 100;
@@ -33,45 +51,20 @@ div.ui.card {
   height: 100%;
 }
 
-/*The Modal*/
-
-.modal-body {
-  display: flex;
-  justify-content: center;
-  padding: 0;
-  border-width: 0;
+/* Drop Down */
+.dropdown-menu {
+  padding:10px;
 }
 
 .btn {
     color: #FFF;
     background-color: #0a2461;
     border-width: 0;
-/*    border-color: #ffa000;
-*/}
+}
 
 #upload_event {
     background-color: #0a2461;
-/*    border-color: #ffa000;
-*/    color: #FFF;
-}
-
-/* Drop Down */
-.dropdown-menu {
-	padding:10px;
-}
-
-body {
-	padding: 100px;
-	padding-top: 0px;
-	font-family: 'Muli', cursive;
-}
-
-h1.ui.header {
-  font-family: 'Josefin Sans', sans-serif;
-	font-size: 42px;
-	color: #FFF;
-	font-weight: bold;
-	margin-left: auto;
+    color: #FFF;
 }
 
 /* ------------------------- */
@@ -138,6 +131,13 @@ div.vis-item {
 /* ------------------------- */
 /*        The Modal          */
 /* ------------------------- */
+
+.modal-body {
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  border-width: 0;
+}
 
 .ui .card {
 	width:100%;
