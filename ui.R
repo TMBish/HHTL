@@ -17,14 +17,13 @@ shinyUI(
     # Sweet Alert
     receiveSweetAlert(messageId = "event_success"),
     
-    # Loading page
-    div(id = "loading_page", h1("Loading...")),
-    
     # Main page after load
     # hidden(
-      div(id = "app-body", class="ui grid", 
-          
-          div(class="one wide column",
+    div(id = "app-body", class="ui grid", 
+        
+        hidden(
+          div(class="one wide column", id = "dropdown-div",
+              
               
               dropdownButton(
                 tags$h3("Add a Historical Event"), hr(),
@@ -46,22 +45,23 @@ shinyUI(
                 icon = icon("plus"),
                 width = "300px",
                 tooltip = tooltipOptions(title = "Click to see inputs !")
-              )   
-          ),
-          
-          div(class="fifteen wide column",
-              
-              div(class = "ui horizontal divider", uiicon("world"), "The History Of Everything")
-              
+              ) 
           )
-          
-      ),
-      
-      br(),
-      
-      timevisOutput("timeline"),
-      
-      br()
+        ),
+        
+        div(class="fifteen wide column",
+            
+            div(class = "ui horizontal divider", uiicon("world"), "The History Of Everything")
+            
+        )
+        
+    ),
+    
+    br(),
+    
+    timevisOutput("timeline"),
+    
+    br()
     # )
   )
 )

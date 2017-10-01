@@ -1,8 +1,6 @@
 
 shinyServer(function(input, output) {
   
-  hide_loading()
-  
   revals <- reactiveValues(
     data = hhtl_obj %>% gs_read()
   )
@@ -12,6 +10,8 @@ shinyServer(function(input, output) {
     
     tl = revals$data %>%
       timevis(height = 600)
+    
+    shinyjs::show("dropdown-div")
     
     return(tl)
     
