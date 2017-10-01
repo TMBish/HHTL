@@ -28,6 +28,11 @@ hhtl_link <- "https://docs.google.com/spreadsheets/d/1ixqO2ZubVrb2-zV1gUSDWA0Sma
 hhtl_obj <- hhtl_link %>%
   gs_url()
 
+hide_loading = function(){
+  Sys.sleep(4)
+  shinyjs::hide("loading_page")
+}
+
 # Load extra scripts
 source("create_card.R")
 source("utils.R")

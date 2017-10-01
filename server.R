@@ -1,6 +1,8 @@
 
 shinyServer(function(input, output) {
   
+  hide_loading()
+  
   revals <- reactiveValues(
     data = hhtl_obj %>% gs_read()
   )
@@ -8,9 +10,10 @@ shinyServer(function(input, output) {
   # The timevis timeline object
   output$timeline <- renderTimevis({
     
-    revals$data %>%
-      timevis(height = 600) %>%
-      return()
+    tl = revals$data %>%
+      timevis(height = 600)
+    
+    return(tl)
     
   })
   
@@ -165,5 +168,7 @@ shinyServer(function(input, output) {
     )
 
   })
+  
+  
   
 })

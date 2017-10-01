@@ -11,13 +11,21 @@
 	justify-content: right;
 	align-items: center;
 	margin-bottom: 15px;
-	background-color: #FF8A80;
+	background-color: #ef89ae;
 	width: 100vw;
 	margin-left: calc(-1 * ((100vw - 100%) / 2));
 	padding-right: 100px;
 }
 
 /* Misc Elements*/
+
+#loading_page {
+  position:absolute;
+  z-index: 100;
+  height: 100%;
+  width: 100%;
+  background-color: #FFF;
+}
 
 /* The info card */
 div.ui.card {
@@ -36,13 +44,13 @@ div.ui.card {
 
 .btn {
     color: #FFF;
-    background-color: #328CC1;
+    background-color: #0a2461;
     border-width: 0;
 /*    border-color: #ffa000;
 */}
 
 #upload_event {
-    background-color: #328CC1;
+    background-color: #0a2461;
 /*    border-color: #ffa000;
 */    color: #FFF;
 }
@@ -79,7 +87,7 @@ h1.ui.header {
     font-size: 20px;
     font-weight: bold;
     line-height: 20px;
-    background-color: #328CC1;
+    background-color: #0a2461;
     color: #FFF;
     border-width: 0;
     margin-left: 5px;
@@ -100,8 +108,9 @@ h1.ui.header {
 
 /* This is a selected timeline Item */
 #timeline .vis-item.vis-selected {
-  border-color: #F7CE3E;
-  background-color: #F7CE3E;
+  border-color: #eb76a1;
+  background-color: #FFF;
+  color: #000;
 }
 
 div.ui.horizontal.divider {
@@ -120,9 +129,9 @@ div.vis-timeline.vis-bottom {
 div.vis-item {
     text-align: center;
     color: #FFF;
-    border-color: #FF5252;
+    border-color: #eb76a1;
     border-width: 1px;
-    background-color: #FF8A80;
+    background-color: #ef89ae;
     font-weight: bold;
 }
 
@@ -161,3 +170,10 @@ div.extra.content > div {
     max-width: 100%;
     max-height: 100%;
 }
+
+/* Coral: ef89ae*/
+/* New pink: ef89ae */
+/* New pink (darker): eb76a1*/
+
+/* Blue 1: 0a2461*/
+/* Blue 2: 0a2461*/
