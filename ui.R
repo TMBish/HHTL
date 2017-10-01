@@ -13,11 +13,9 @@ shinyUI(
     ),
     
     br(),
-    
-    
+
     # Sweet Alert
     receiveSweetAlert(messageId = "event_success"),
-    
     
     div(class="ui grid", 
         
@@ -49,8 +47,7 @@ shinyUI(
         div(class="fifteen wide column",
             
             div(class = "ui horizontal divider", uiicon("world"), "The History Of Everything")
-            
-            
+
             )
 
     ),
@@ -60,11 +57,5 @@ shinyUI(
     timevisOutput("timeline"),
     
     br()
-    
-    # submitButton("test", "Test"),
-    # 
-
-  
-   
   )
 )

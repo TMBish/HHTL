@@ -35,15 +35,16 @@ div.ui.card {
 }
 
 .btn {
-    color: #fff;
-    background-color: #ffc107;
-    border-color: #ffa000;
-}
+    color: #FFF;
+    background-color: #328CC1;
+    border-width: 0;
+/*    border-color: #ffa000;
+*/}
 
 #upload_event {
-    background-color: #ffc107;
-    border-color: #ffa000;
-    color: #FFF;
+    background-color: #328CC1;
+/*    border-color: #ffa000;
+*/    color: #FFF;
 }
 
 /* Drop Down */
@@ -78,9 +79,10 @@ h1.ui.header {
     font-size: 20px;
     font-weight: bold;
     line-height: 20px;
-    background-color: #ffc107;
-    border-color: #ffa000;
+    background-color: #328CC1;
     color: #FFF;
+    border-width: 0;
+    margin-left: 5px;
 }
 
 #timeline .vis-panel.vis-bottom {
@@ -98,8 +100,8 @@ h1.ui.header {
 
 /* This is a selected timeline Item */
 #timeline .vis-item.vis-selected {
-  border-color: green;
-  background-color: lightgreen;
+  border-color: #F7CE3E;
+  background-color: #F7CE3E;
 }
 
 div.ui.horizontal.divider {
@@ -132,6 +134,19 @@ div.vis-item {
 	width:100%;
 }
 
+div.modal-body {
+  padding: 10px;
+}
+
 div.extra.content {
-  color: #FF5252;
+  color: #000 !important;
+}
+
+div.form-group.shiny-input-container  {
+  display: inline-block;
+  vertical-align:top;
+}
+
+div.extra.content > div {
+  width: 100%;
 }

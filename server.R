@@ -65,12 +65,83 @@ shinyServer(function(input, output) {
       showModal(
         modalDialog(
           create_card(selected_index, revals$data)
-        , title = NULL, size ="l", footer=NULL, easyClose = TRUE, fade = TRUE
+        , title = NULL, size ="l", 
+        footer=actionBttn(inputId = "edit_ev", label = "Edit",style = "unite", color = "warning"),
+        easyClose = TRUE, fade = TRUE
         )
       )
       
     }
   })
   
+  # Respond to a edit event button click
+  observeEvent( input$edit_ev, {
+    
+    selected_index = input$timeline_selected 
+      
+    showModal(
+        modalDialog(
+          create_card(selected_index, revals$data, edit_mode=TRUE),
+          title = NULL, size ="l",
+          footer=div(
+            actionBttn(inputId="cancel_edits", label = "Cancel",style = "unite", color = "danger"),
+            actionBttn(inputId = "save_edits", label = "Save",style = "unite", color = "success")
+            ),
+          easyClose = TRUE, fade = TRUE
+          
+        )
+      )
+      
+  })
+  
+  # Save changes from an edit
+  observeEvent(input$cancel_edits ,{
+    
+    removeModal()
+    
+    selected_index = input$timeline_selected 
+    
+    showModal(
+      modalDialog(
+        create_card(selected_index, revals$data)
+        , title = NULL, size ="l", 
+        footer=actionBttn(inputId = "edit_ev", label = "Edit",style = "unite", color = "warning"),
+        easyClose = TRUE, fade = TRUE
+      )
+    )
+  })
+  
+  # Save changes from an edit
+  observeEvent(input$save_edits ,{
+    
+    selected_index = input$timeline_selected 
+    
+    new_row <- data.frame(
+      id = selected_index %>% as.integer(),
+      content = input$new_title,
+      start = input$new_ev_dates[1],
+      end = input$new_ev_dates[2],
+      img = input$new_img_url,
+      description = input$new_description,
+      entry_added = Sys.time()
+    )
+    
+    # Add row to googlesheet object
+    hhtl_obj <- hhtl_obj %>%
+      gs_edit_cells(
+        input = new_row,
+        anchor = glue("R{selected_index%>%as.integer() + 1}C1"),
+        col_names = FALSE
+    )
+
+    # Update reactive object
+    revals$data <- hhtl_obj %>% gs_read()
+
+    # Create update message
+    sendSweetAlert(
+      messageId = "event_success", title = "Success!!", text = glue("Details successfully Updated"), type = "success"
+    )
+
+  })
   
 })

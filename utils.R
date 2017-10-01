@@ -12,7 +12,7 @@ format_time_diff = function(x,y) {
     
     output = difftime(x,y,units="secs") %>% as.numeric() %>% round(0) %>% paste0("s")
     
-  } else if (x.hour == y.hour || (x.hour - y.hour) %>% as.integer() == 1) {
+  } else if (x.hour == y.hour || difftime(x.hour, y.hour, units="hours") %>% as.integer() == 1) {
     
     output = difftime(x,y,units="mins") %>% as.numeric() %>% round(0) %>% paste0("m")
     
