@@ -94,6 +94,28 @@ shinyServer(function(input, output) {
       
   })
   
+  # The image preview in the edit event modal
+  output$img_preview <- renderUI({
+    img(src = input$new_img_url)
+  })
+  
+  
+  observeEvent(input$cancel_edits ,{
+    
+    removeModal()
+    
+    selected_index = input$timeline_selected 
+    
+    showModal(
+      modalDialog(
+        create_card(selected_index, revals$data)
+        , title = NULL, size ="l", 
+        footer=actionBttn(inputId = "edit_ev", label = "Edit",style = "unite", color = "warning"),
+        easyClose = TRUE, fade = TRUE
+      )
+    )
+  })
+  
   # Save changes from an edit
   observeEvent(input$cancel_edits ,{
     

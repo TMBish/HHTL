@@ -43,7 +43,8 @@ create_card = function(ind, df, edit_mode=FALSE) {
             "Hannah"
         ),
         div(class = "image",
-            img(src = img_link),
+
+            uiOutput("img_preview"),
             
             textInput("new_img_url", label=NULL, value = TLinfo$img, width="100%")
         ),
