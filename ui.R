@@ -1,6 +1,6 @@
 shinyUI(
   semanticPage(
-    title = "My page",
+    title = "Hannah's History Timeline",
     useShinyjs(),
     extendShinyjs(text = jsCode),
     
