@@ -20,8 +20,6 @@ shinyServer(function(input, output) {
   # Observe when an event update request is received
   observeEvent(input$upload_event, {
     
-    shinyjs::alert("startdy")
-    
     title <- input$title
     img_link <- input$image_link
     ev_dates <- input$event_dates
@@ -32,8 +30,6 @@ shinyServer(function(input, output) {
     time_added <- Sys.time()
     
     if(end_date==start_date){end_date<-NA}
-    
-    shinyjs::alert(revals$data[["id"]] %>% max())
     
     # New data in a dataframe
     new_row <- data.frame(
@@ -46,14 +42,9 @@ shinyServer(function(input, output) {
       entry_added = time_added
     )
   
-    shinyjs::alert("Just before adding to spreaddy")
-    
     # Add row to googlesheet object
     hhtl_obj <- hhtl_obj %>%
       gs_add_row(new_row, ws = 1)
-    
-    shinyjs::alert("Just afrer adding to spreaddy")
-    
     
     # Update reactive object
     revals$data <- hhtl_obj %>% gs_read()
