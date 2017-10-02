@@ -33,7 +33,7 @@ shinyServer(function(input, output) {
     
     if(end_date==start_date){end_date<-NA}
     
-    shinyjs::alert(revals$data)
+    shinyjs::alert(revals$data[["id"]])
     
     # New data in a dataframe
     new_row <- data.frame(
