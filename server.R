@@ -33,7 +33,7 @@ shinyServer(function(input, output) {
     
     if(end_date==start_date){end_date<-NA}
     
-    shinyjs::alert("tester")
+    shinyjs::alert(revals$data %>% pull(id) %>% max() + 1)
     
     # New data in a dataframe
     new_row <- data.frame(
@@ -45,7 +45,7 @@ shinyServer(function(input, output) {
       description = desc,
       entry_added = time_added
     )
-    
+  
     shinyjs::alert("Just before adding to spreaddy")
     
     # Add row to googlesheet object
