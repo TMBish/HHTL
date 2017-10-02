@@ -43,9 +43,14 @@ shinyServer(function(input, output) {
       entry_added = time_added
     )
     
+    shinyjs::alert("Just before adding to spreaddy")
+    
     # Add row to googlesheet object
     hhtl_obj <- hhtl_obj %>%
       gs_add_row(new_row, ws = 1)
+    
+    shinyjs::alert("Just afrer adding to spreaddy")
+    
     
     # Update reactive object
     revals$data <- hhtl_obj %>% gs_read()
