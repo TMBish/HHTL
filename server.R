@@ -33,6 +33,7 @@ shinyServer(function(input, output) {
     
     if(end_date==start_date){end_date<-NA}
     
+    shinyjs::alert("tester")
     
     # New data in a dataframe
     new_row <- data.frame(
