@@ -24,8 +24,8 @@ create_card = function(ind, df, edit_mode=FALSE) {
             img(src = img_link)
         ),
         div(class = "content",
-            span(class = "right floated", uiicon("calendar"), dates),
-            uiicon("comment"), 
+            span(class = "right floated", icon("calendar"), dates),
+            icon("comment"), 
             TLinfo$content
         ),
         div(class = "extra content",
@@ -50,8 +50,8 @@ create_card = function(ind, df, edit_mode=FALSE) {
         ),
         
         div(class = "content",
-            span(class = "right floated", uiicon("calendar"), dateRangeInput("new_ev_dates", label=NULL, start = TLinfo$start, end = TLinfo$end)),
-            span(uiicon("comment"), textInput("new_title",label=NULL, value = TLinfo$content))
+            span(class = "right floated", icon("calendar"), dateRangeInput("new_ev_dates", label=NULL, start = TLinfo$start, end = TLinfo$end)),
+            span(icon("comment"), textInput("new_title",label=NULL, value = TLinfo$content))
         ),
         div(class = "extra content",
             

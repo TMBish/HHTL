@@ -39,7 +39,7 @@ shinyUI(
                               value = "", 
                               height = 150),
                 
-                actionButton("upload_event", "Add Event", icon =  uiicon("upload")),
+                actionButton("upload_event", "Add Event", icon =  icon("upload")),
                 
                 circle = TRUE, 
                 icon = icon("plus"),
