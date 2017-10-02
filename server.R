@@ -20,6 +20,8 @@ shinyServer(function(input, output) {
   # Observe when an event update request is received
   observeEvent(input$upload_event, {
     
+    shinyjs::alert("startdy")
+    
     title <- input$title
     img_link <- input$image_link
     ev_dates <- input$event_dates
