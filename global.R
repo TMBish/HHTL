@@ -23,10 +23,10 @@ Shiny.onInputChange('TL_selection', sel_title)
 
 }"
 
-hhtl_link <- "https://docs.google.com/spreadsheets/d/1ixqO2ZubVrb2-zV1gUSDWA0SmajvhZUitfv9LBPD4jc/edit?usp=sharing"
+hhtl_key <- extract_key_from_url("https://docs.google.com/spreadsheets/d/1ixqO2ZubVrb2-zV1gUSDWA0SmajvhZUitfv9LBPD4jc/edit?usp=sharing")
 
-hhtl_obj <- hhtl_link %>%
-  gs_url()
+hhtl_obj <- hhtl_key %>%
+  gs_key()
 
 hide_loading = function(){
   Sys.sleep(4)
