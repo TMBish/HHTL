@@ -28,6 +28,10 @@ hhtl_key <- extract_key_from_url("https://docs.google.com/spreadsheets/d/1ixqO2Z
 hhtl_obj <- hhtl_key %>%
   gs_key()
 
+# Assumes an oauth .rds file is in the working directory
+# Manually copied over to the EC2 instance using putty
+gs_auth(token = "gsheets_auth.rds")
+
 hide_loading = function(){
   Sys.sleep(4)
   shinyjs::hide("loading_page")
