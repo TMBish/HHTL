@@ -26,7 +26,7 @@ Shiny.onInputChange('TL_selection', sel_title)
 hhtl_key <- extract_key_from_url("https://docs.google.com/spreadsheets/d/1ixqO2ZubVrb2-zV1gUSDWA0SmajvhZUitfv9LBPD4jc/edit?usp=sharing")
 
 hhtl_obj <- hhtl_key %>%
-  gs_key()
+  gs_key(visibility = "private")
 
 # Assumes an oauth .rds file is in the working directory
 # Manually copied over to the EC2 instance using putty
