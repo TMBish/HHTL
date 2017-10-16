@@ -31,7 +31,7 @@ hhtl_obj <- hhtl_key %>%
 # Assumes an oauth .rds file is in the working directory
 # Manually copied over to the EC2 instance using putty
 gs_auth(token = "gsheets_auth.rds", new_user = TRUE)
-suppressMessages(gs_auth(token = "googlesheets_token.rds", verbose = FALSE))
+suppressMessages(gs_auth(token = "gsheets_auth.rds", verbose = FALSE))
 
 hide_loading = function(){
   Sys.sleep(4)
