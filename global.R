@@ -40,7 +40,7 @@ csv_data = read_csv("./data/DATA.csv")
 #%>%  mutate(start = dmy(start), end = dmy(end))
 
 hide_loading = function(){
-  Sys.sleep(4)
+  Sys.sleep(1)
   shinyjs::hide("loading_page")
 }
 
