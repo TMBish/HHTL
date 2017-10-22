@@ -1,9 +1,14 @@
 
 shinyServer(function(input, output) {
   
+  # revals <- reactiveValues(
+  #   data = hhtl_obj %>% gs_read()
+  # )
+  
   revals <- reactiveValues(
-    data = hhtl_obj %>% gs_read()
+    data = csv_data
   )
+  
   
   # The timevis timeline object
   output$timeline <- renderTimevis({
@@ -20,6 +25,8 @@ shinyServer(function(input, output) {
   # Observe when an event update request is received
   observeEvent(input$upload_event, {
     
+    data_ = revals$data
+    
     title <- input$title
     img_link <- input$image_link
     ev_dates <- input$event_dates
@@ -32,8 +39,8 @@ shinyServer(function(input, output) {
     if(end_date==start_date){end_date<-NA}
     
     # New data in a dataframe
-    new_row <- data.frame(
-      id = revals$data[["id"]] %>% max() + 1,
+    new_row <- tibble(
+      id = ifelse(data_ %>% nrow() == 0 , 1, data_$id %>% max() + 1),
       content = title,
       start = start_date,
       end = end_date,
@@ -41,18 +48,27 @@ shinyServer(function(input, output) {
       description = desc,
       entry_added = time_added
     )
-  
+    
     # Add row to googlesheet object
-    hhtl_obj <- hhtl_obj %>%
-      gs_add_row(new_row, ws = 1)
+    # hhtl_obj <- hhtl_obj %>%
+    #   gs_add_row(new_row, ws = 1)
+    data_ = data_ %>% rbind(new_row)
+    
     
     # Update reactive object
-    revals$data <- hhtl_obj %>% gs_read()
+    #revals$data <- hhtl_obj %>% gs_read()
+    revals$data <- data_
+    
+    # Write new data locally
+    write_csv(data_, "./data/DATA.csv")
+    
     
     # Create update message
     sendSweetAlert(
       messageId = "event_success", title = "Success!!", text = glue("You added {title} to the timeline!"), type = "success"
     )
+    
+    
     
   })
   
@@ -60,6 +76,7 @@ shinyServer(function(input, output) {
   observe({
     
     selected_index = input$timeline_selected 
+
     
     # Only do something if the event is a new TL index has been clicked on
     if (selected_index %>% length() > 0) {
@@ -67,9 +84,9 @@ shinyServer(function(input, output) {
       showModal(
         modalDialog(
           create_card(selected_index, revals$data)
-        , title = NULL, size ="l", 
-        footer=actionBttn(inputId = "edit_ev", label = "Edit",style = "unite", color = "warning"),
-        easyClose = TRUE, fade = TRUE
+          , title = NULL, size ="l", 
+          footer=actionBttn(inputId = "edit_ev", label = "Edit",style = "unite", color = "warning"),
+          easyClose = TRUE, fade = TRUE
         )
       )
       
@@ -80,20 +97,20 @@ shinyServer(function(input, output) {
   observeEvent( input$edit_ev, {
     
     selected_index = input$timeline_selected 
-      
+    
     showModal(
-        modalDialog(
-          create_card(selected_index, revals$data, edit_mode=TRUE),
-          title = NULL, size ="l",
-          footer=div(
-            actionBttn(inputId="cancel_edits", label = "Cancel",style = "unite", color = "danger"),
-            actionBttn(inputId = "save_edits", label = "Save",style = "unite", color = "success")
-            ),
-          easyClose = TRUE, fade = TRUE
-          
-        )
+      modalDialog(
+        create_card(selected_index, revals$data, edit_mode=TRUE),
+        title = NULL, size ="l",
+        footer=div(
+          actionBttn(inputId="cancel_edits", label = "Cancel",style = "unite", color = "danger"),
+          actionBttn(inputId = "save_edits", label = "Save",style = "unite", color = "success")
+        ),
+        easyClose = TRUE, fade = TRUE
+        
       )
-      
+    )
+    
   })
   
   # The image preview in the edit event modal
@@ -122,9 +139,11 @@ shinyServer(function(input, output) {
   # Save changes from an edit
   observeEvent(input$save_edits ,{
     
+    data_ = revals$data
+    
     selected_index = input$timeline_selected 
     
-    new_row <- data.frame(
+    new_row <- tibble(
       id = selected_index %>% as.integer(),
       content = input$new_title,
       start = input$new_ev_dates[1],
@@ -135,21 +154,31 @@ shinyServer(function(input, output) {
     )
     
     # Add row to googlesheet object
-    hhtl_obj <- hhtl_obj %>%
-      gs_edit_cells(
-        input = new_row,
-        anchor = glue("R{selected_index%>%as.integer() + 1}C1"),
-        col_names = FALSE
-    )
-
+    # hhtl_obj <- hhtl_obj %>%
+    #   gs_edit_cells(
+    #     input = new_row,
+    #     anchor = glue("R{selected_index%>%as.integer() + 1}C1"),
+    #     col_names = FALSE
+    # )
+    globale_row <<- new_row
+    
+    # Alter data
+    replace_row = match(selected_index, data_$id)
+    data_[as.integer(replace_row),] = new_row
+    
+    
     # Update reactive object
-    revals$data <- hhtl_obj %>% gs_read()
-
+    revals$data <- data_
+    
+    # Write new data locally
+    write_csv(data_, "./data/DATA.csv")
+    
+    
     # Create update message
     sendSweetAlert(
       messageId = "event_success", title = "Success!!", text = glue("Details successfully Updated"), type = "success"
     )
-
+    
   })
   
   

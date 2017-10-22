@@ -8,6 +8,7 @@ library(googlesheets)
 library(dplyr)
 library(glue)
 library(lubridate)
+library(readr)
 
 jsCode <- "
 
@@ -23,15 +24,20 @@ Shiny.onInputChange('TL_selection', sel_title)
 
 }"
 
-hhtl_key <- extract_key_from_url("https://docs.google.com/spreadsheets/d/1ixqO2ZubVrb2-zV1gUSDWA0SmajvhZUitfv9LBPD4jc/edit?usp=sharing")
-
-hhtl_obj <- hhtl_key %>%
-  gs_key(visibility = "private")
+# hhtl_key <- extract_key_from_url("https://docs.google.com/spreadsheets/d/1ixqO2ZubVrb2-zV1gUSDWA0SmajvhZUitfv9LBPD4jc/edit?usp=sharing")
+# 
+# hhtl_obj <- hhtl_key %>%
+#   gs_key(visibility = "private")
 
 # Assumes an oauth .rds file is in the working directory
 # Manually copied over to the EC2 instance using putty
 #gs_auth(token = "gsheets_auth.rds", new_user = TRUE)
 #suppressMessages(gs_auth(token = "gsheets_auth.rds", verbose = FALSE))
+
+
+# Read in csv
+csv_data = read_csv("./data/DATA.csv") 
+#%>%  mutate(start = dmy(start), end = dmy(end))
 
 hide_loading = function(){
   Sys.sleep(4)
