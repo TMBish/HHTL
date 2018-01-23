@@ -26,7 +26,7 @@ create_card = function(ind, df, edit_mode=FALSE) {
         div(class = "content",
             span(class = "right floated", icon("calendar"), dates),
             icon("comment"), 
-            TLinfo$content
+            TLinfo$title
         ),
         div(class = "extra content",
             
@@ -51,7 +51,7 @@ create_card = function(ind, df, edit_mode=FALSE) {
         
         div(class = "content",
             span(class = "right floated", icon("calendar"), dateRangeInput("new_ev_dates", label=NULL, start = TLinfo$start, end = TLinfo$end)),
-            span(icon("comment"), textInput("new_title",label=NULL, value = TLinfo$content))
+            span(icon("comment"), textInput("new_title",label=NULL, value = TLinfo$title))
         ),
         div(class = "extra content",
             

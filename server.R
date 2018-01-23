@@ -1,19 +1,22 @@
 
 shinyServer(function(input, output) {
   
-  # revals <- reactiveValues(
-  #   data = hhtl_obj %>% gs_read()
-  # )
-  
   revals <- reactiveValues(
-    data = csv_data
+    data = data
   )
-  
   
   # The timevis timeline object
   output$timeline <- renderTimevis({
     
     tl = revals$data %>%
+      rename(
+        "start" = start_date, 
+        "end" = end_date,
+        "content" = title
+      ) %>%
+      mutate(
+        end = ifelse(start==end,NA,end)
+      ) %>%
       timevis(height = 600)
     
     shinyjs::show("dropdown-div")
@@ -36,12 +39,12 @@ shinyServer(function(input, output) {
     
     time_added <- Sys.time()
     
-    if(end_date==start_date){end_date<-NA}
+    #if(end_date==start_date){end_date<-NA}
     
     # New data in a dataframe
     new_row <- tibble(
       id = ifelse(data_ %>% nrow() == 0 , 1, data_$id %>% max() + 1),
-      content = title,
+      title = title,
       start = start_date,
       end = end_date,
       img = img_link,
@@ -49,19 +52,14 @@ shinyServer(function(input, output) {
       entry_added = time_added
     )
     
-    # Add row to googlesheet object
-    # hhtl_obj <- hhtl_obj %>%
-    #   gs_add_row(new_row, ws = 1)
-    data_ = data_ %>% rbind(new_row)
+    # Write to database
+    sql = glue_sql("
+      INSERT INTO events VALUES
+        ({new_row$id}, {new_row$title} , {new_row$start %>% as.character()} , {new_row$end %>% as.character()}, {new_row$img}, {new_row$description}, current_timestamp);", .con = db_pool)
+    dbExecute(db_pool, sql)
     
-    
-    # Update reactive object
-    #revals$data <- hhtl_obj %>% gs_read()
-    revals$data <- data_
-    
-    # Write new data locally
-    write_csv(data_, "./data/DATA.csv")
-    
+    # Refresh Data
+    revals$data <- dbGetQuery(db_pool, "SELECT * FROM events")
     
     # Create update message
     sendSweetAlert(
@@ -142,10 +140,10 @@ shinyServer(function(input, output) {
     data_ = revals$data
     
     selected_index = input$timeline_selected 
-    
+
     new_row <- tibble(
       id = selected_index %>% as.integer(),
-      content = input$new_title,
+      title = input$new_title,
       start = input$new_ev_dates[1],
       end = input$new_ev_dates[2],
       img = input$new_img_url,
@@ -153,26 +151,23 @@ shinyServer(function(input, output) {
       entry_added = Sys.time()
     )
     
-    # Add row to googlesheet object
-    # hhtl_obj <- hhtl_obj %>%
-    #   gs_edit_cells(
-    #     input = new_row,
-    #     anchor = glue("R{selected_index%>%as.integer() + 1}C1"),
-    #     col_names = FALSE
-    # )
-    globale_row <<- new_row
+    # Update the database
+    sql = glue_sql("
+                   UPDATE events SET
+                      id = {new_row$id},
+                      title = {new_row$title},
+                      start_date = {new_row$start %>% as.character()},
+                      end_date = {new_row$end %>% as.character()},
+                      img = {new_row$img},
+                      description = {new_row$description},
+                      entry_added = current_timestamp
+                    WHERE
+                      id = {selected_index}", .con = db_pool)
     
-    # Alter data
-    replace_row = match(selected_index, data_$id)
-    data_[as.integer(replace_row),] = new_row
+    dbExecute(db_pool, sql)
     
-    
-    # Update reactive object
-    revals$data <- data_
-    
-    # Write new data locally
-    write_csv(data_, "./data/DATA.csv")
-    
+    # Refresh Data
+    revals$data <- dbGetQuery(db_pool, "SELECT * FROM events")
     
     # Create update message
     sendSweetAlert(
