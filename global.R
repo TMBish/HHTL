@@ -10,6 +10,7 @@ library(lubridate)
 library(readr)
 library(pool)
 library(RPostgreSQL)
+library(keyring)
 
 jsCode <- "
 

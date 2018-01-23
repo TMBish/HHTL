@@ -15,7 +15,7 @@ shinyServer(function(input, output) {
         "content" = title
       ) %>%
       mutate(
-        end = ifelse(start==end,NA,end)
+        end = ifelse(start==end,NA,end) %>% as_date()
       ) %>%
       timevis(height = 600)
     
