@@ -114,19 +114,23 @@ div.ui.horizontal.divider {
 	font-size: 2rem;
 }
 
-
+/* Switch off border of timeline*/
 div.vis-timeline.vis-bottom {
 	border: 0px;
 }
 
+/* Overflow text*/
+.vis-item .vis-item-overflow {
+  overflow: visible;
+}
+
 div.vis-item {
     text-align: center;
-    color: #FFF;
-    border-color: #eb76a1;
+    color: #000000;
+    border-color: #e54982;
     border-width: 1px;
     background-color: #ef89ae;
-    font-weight: bold;
-}
+} 
 
 /* ------------------------- */
 /*        The Modal          */
