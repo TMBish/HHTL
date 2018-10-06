@@ -2,6 +2,7 @@ shinyUI(
   semanticPage(
     title = "Hannah's History Timeline",
     useShinyjs(),
+    useSweetAlert(),
     extendShinyjs(text = jsCode),
     
     # Add custom css styles
@@ -15,7 +16,7 @@ shinyUI(
     br(),
     
     # Sweet Alert
-    receiveSweetAlert(messageId = "event_success"),
+    #receiveSweetAlert(messageId = "event_success"),
     
     # Main page after load
     # hidden(
@@ -38,9 +39,11 @@ shinyUI(
                               label = "Add a Decription:", 
                               value = "", 
                               height = 150),
-                
+
+                textInput("new_code", "Enter code word:"),
+
                 actionButton("upload_event", "Add Event", icon =  icon("upload")),
-                
+
                 circle = TRUE, 
                 icon = icon("plus"),
                 width = "300px",

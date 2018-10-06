@@ -1,17 +1,21 @@
-library(shiny)
-library(shinyjs)
-library(shiny.semantic)
-library(shinyWidgets)
-library(timevis)
-library(V8)
-library(dplyr)
-library(glue)
-library(lubridate)
-library(readr)
-library(pool)
-library(RPostgreSQL)
-library(keyring)
+if (!("pacman" %in% installed.packages())) install.packages('pacman')
+library(pacman)
 
+# Packages --------------------------------------------------------------
+
+
+p_load(
+  tidyverse, lubridate, glue, stringr, furrr,
+  V8, timevis, shiny.semantic, shiny, googleCloudStorageR, shinyWidgets, shinyjs, here
+)
+
+
+# Options  --------------------------------------------------------------------
+
+# Secret code
+source("data/secrets.R")
+
+# Cheeky javascript
 jsCode <- "
 
 shinyjs.init = function() {
@@ -26,30 +30,37 @@ Shiny.onInputChange('TL_selection', sel_title)
 
 }"
 
-# Connect to database
-db <- 'hhtl'
-host <- 'hhtl.ctysajtozyfu.us-west-2.rds.amazonaws.com' 
-port <- 5432
-username <- key_list("hhtl")$username
-password <- key_get(service = "hhtl", username = "hhtl")
 
-db_pool <- dbPool(
-  drv = dbDriver("PostgreSQL"),
-  dbname = db,
-  host = host,
-  port = port,
-  user = username,
-  password = password
+# Load extra scripts
+source("create_card.R")
+source("utils.R")
+
+# Data --------------------------------------------------------------------
+
+# Connect and auth gcp
+Sys.setenv("GCS_AUTH_FILE" = paste0(here(), "/data/tmbish-8998f7559de5.json"))
+options(googleAuthR.scopes.selected = "https://www.googleapis.com/auth/devstorage.full_control")
+gcs_auth()
+
+# Read data
+data_path = "hhtl-events-data.csv"
+
+# Write locally
+gcs_get_object(
+  object_name = data_path,
+  bucket = "hhtl",
+  saveToDisk = "data/temp.csv",
+  overwrite = TRUE
 )
 
-# Read in csv
-data = dbGetQuery(db_pool, "SELECT * FROM events")
+# Read in
+data = read_csv("data/temp.csv")
+
+# Remove local
+file.remove("data/temp.csv")
+
 
 hide_loading = function(){
   Sys.sleep(1)
   shinyjs::hide("loading_page")
 }
-
-# Load extra scripts
-source("create_card.R")
-source("utils.R")

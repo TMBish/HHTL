@@ -1,2 +1,4 @@
 *.httr-oauth
 *.Rhistory
+.Rproj.user
+*.json

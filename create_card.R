@@ -1,18 +1,23 @@
 create_card = function(ind, df, edit_mode=FALSE) {
-  
-  TLinfo <- df %>% filter(id == ind)
+
+  TLinfo <- df %>% filter(id == trimws(ind))
   
   dates <- ifelse(
-    is.na(TLinfo$end), 
-    TLinfo$start %>% format("%d %b %Y"),
-    TLinfo$start %>% format("%d %b %Y") %>% paste(TLinfo$end %>% format("%d %b %Y"), sep = " - "))
+    is.na(TLinfo$end_date), 
+    TLinfo$start_date %>% format("%d %b %Y"),
+    TLinfo$start_date %>% format("%d %b %Y") %>% paste(TLinfo$end_date %>% format("%d %b %Y"), sep = " - ")
+  )
   
   img_link <- TLinfo$img
   
   time_added <- TLinfo$entry_added %>% ymd_hms()
   
+  # Since now info
   since_now <- format_time_diff(Sys.time() %>% ymd_hms(), time_added)
   
+  # Description if na is blank
+  description = ifelse(is.na(TLinfo$description),"", TLinfo$description)
+
   if (!edit_mode) {
     div(class = "ui card",
         div(class = "content",
@@ -30,7 +35,7 @@ create_card = function(ind, df, edit_mode=FALSE) {
         ),
         div(class = "extra content",
             
-            HTML(TLinfo$description %>% markdown::markdownToHTML(text = . , fragment.only = TRUE))
+            description %>% markdown::markdownToHTML(text = . , fragment.only = TRUE) %>% HTML()
             
         )
     )
@@ -50,13 +55,27 @@ create_card = function(ind, df, edit_mode=FALSE) {
         ),
         
         div(class = "content",
-            span(class = "right floated", icon("calendar"), dateRangeInput("new_ev_dates", label=NULL, start = TLinfo$start, end = TLinfo$end)),
+            span(
+                class = "right floated", 
+                icon("calendar"), 
+                dateRangeInput(
+                    "new_ev_dates", 
+                    label=NULL, 
+                    start = TLinfo$start_date, 
+                    end = TLinfo$end_date)
+                ),
             span(icon("comment"), textInput("new_title",label=NULL, value = TLinfo$title))
         ),
         div(class = "extra content",
             
-            textAreaInput("new_description", label=NULL, value = TLinfo$description, width="100%", height=250)
+            textAreaInput("new_description", label=NULL, value = description, width="100%", height=250)
           
+        ), 
+
+        div(class = "extra content",
+
+            textInput("edit_code", "Enter code word:")
+
         )
     )
   }
